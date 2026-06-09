@@ -1,0 +1,370 @@
+/* Premium Glassmorphic & Neon NeoCalc Styles */
+
+.calculator-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: hsl(var(--glass-bg));
+  border: 1px solid hsl(var(--glass-border));
+  border-radius: 28px;
+  box-shadow: 
+    0 24px 48px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 hsl(var(--text-primary) / 0.15);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  padding: 36px;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+/* Scientific Mode expansion sizing */
+.calculator-container.scientific {
+  max-width: 760px;
+}
+
+/* Header Section */
+.calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.calc-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, hsl(var(--accent-primary)), hsl(var(--accent-secondary)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calc-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon-btn {
+  background: hsl(var(--glass-bg));
+  border: 1px solid hsl(var(--glass-border));
+  color: hsl(var(--text-secondary));
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: var(--transition-smooth);
+}
+
+.icon-btn:hover {
+  background: hsl(var(--glass-highlight));
+  color: hsl(var(--text-primary));
+  border-color: hsl(var(--accent-primary) / 0.5);
+  box-shadow: 0 0 12px hsl(var(--accent-primary) / 0.35);
+}
+
+.icon-btn.active {
+  background: hsl(var(--accent-primary) / 0.15);
+  color: hsl(var(--accent-primary));
+  border-color: hsl(var(--accent-primary) / 0.4);
+}
+
+/* Display Screen */
+.calc-screen {
+  background: hsl(var(--bg-primary) / 0.65);
+  border: 1px solid hsl(var(--glass-border));
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 36px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 140px;
+  word-wrap: break-word;
+  word-break: break-all;
+  transition: var(--transition-smooth);
+}
+
+.screen-expression {
+  font-family: var(--font-mono);
+  font-size: 2.1rem;
+  font-weight: 400;
+  color: hsl(var(--text-primary));
+  min-height: 2.5rem;
+  line-height: 1.25;
+  overflow-y: auto;
+  max-height: 90px;
+}
+
+.screen-result {
+  font-family: var(--font-mono);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: hsl(var(--text-secondary) / 0.75);
+  min-height: 1.8rem;
+  margin-top: 8px;
+  transition: var(--transition-smooth);
+}
+
+.screen-result.final {
+  color: hsl(var(--accent-secondary));
+  font-weight: 600;
+}
+
+/* Button Layout Grid */
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  transition: var(--transition-smooth);
+}
+
+.calculator-container.scientific .calc-grid {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+/* Calculator Keys */
+.calc-key {
+  background: hsl(var(--glass-bg));
+  border: 1px solid hsl(var(--glass-border));
+  color: hsl(var(--text-primary));
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 500;
+  padding: 20px 0;
+  border-radius: 18px;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+/* Standard key colors */
+.calc-key.number {
+  background: hsl(var(--glass-highlight));
+}
+
+.calc-key:hover {
+  background: hsl(var(--glass-highlight) / 1.5);
+  border-color: hsl(var(--accent-primary) / 0.3);
+  transform: translateY(-2px);
+}
+
+.calc-key:active {
+  transform: translateY(1px) scale(0.97);
+}
+
+/* Operator Keys */
+.calc-key.operator {
+  color: hsl(var(--accent-warning));
+  font-weight: 600;
+}
+.calc-key.operator:hover {
+  border-color: hsl(var(--accent-warning) / 0.5);
+  box-shadow: 0 0 12px hsl(var(--accent-warning) / 0.2);
+}
+
+/* Scientific Function Keys */
+.calc-key.scientific-key {
+  color: hsl(var(--accent-secondary));
+  font-size: 1.1rem;
+}
+.calc-key.scientific-key:hover {
+  border-color: hsl(var(--accent-secondary) / 0.5);
+  box-shadow: 0 0 12px hsl(var(--accent-secondary) / 0.2);
+}
+
+/* Equal Button */
+.calc-key.equals {
+  background: linear-gradient(135deg, hsl(var(--accent-primary)), hsl(var(--accent-primary) / 0.8));
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 6px 18px hsl(var(--accent-primary) / 0.35);
+}
+.calc-key.equals:hover {
+  background: linear-gradient(135deg, hsl(var(--accent-primary) / 1.1), hsl(var(--accent-primary) / 0.9));
+  box-shadow: 0 8px 24px hsl(var(--accent-primary) / 0.55);
+}
+
+/* Clear & Backspace Keys */
+.calc-key.clear {
+  color: hsl(var(--accent-danger));
+}
+.calc-key.clear:hover {
+  border-color: hsl(var(--accent-danger) / 0.5);
+  box-shadow: 0 0 12px hsl(var(--accent-danger) / 0.2);
+}
+
+.calc-key.backspace {
+  color: hsl(var(--text-secondary));
+}
+
+/* Responsive grid layouts */
+@media (max-width: 600px) {
+  .calculator-container.scientific {
+    max-width: 100%;
+  }
+  .calculator-container.scientific .calc-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  /* Place scientific keys in a subgrid or separate section on small screens */
+  .calculator-container.scientific .scientific-keys-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+}
+
+/* History Drawer (Sliding Panel) */
+.history-drawer {
+  position: absolute;
+  top: 0;
+  right: -100%;
+  width: 280px;
+  height: 100%;
+  background: hsl(var(--bg-primary) / 0.95);
+  border-left: 1px solid hsl(var(--glass-border));
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.history-drawer.open {
+  right: 0;
+}
+
+.history-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid hsl(var(--glass-border));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: hsl(var(--text-primary));
+}
+
+.history-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-item {
+  background: hsl(var(--glass-bg));
+  border: 1px solid hsl(var(--glass-border));
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  transition: var(--transition-smooth);
+}
+
+.history-item:hover {
+  background: hsl(var(--glass-highlight));
+  border-color: hsl(var(--accent-primary) / 0.3);
+}
+
+.history-expr {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: hsl(var(--text-secondary));
+  text-align: right;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-res-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.history-copy-btn {
+  background: transparent;
+  border: none;
+  color: hsl(var(--text-muted));
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: var(--transition-smooth);
+}
+
+.history-copy-btn:hover {
+  color: hsl(var(--accent-secondary));
+  background: hsl(var(--accent-secondary) / 0.1);
+}
+
+.history-res {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: hsl(var(--accent-secondary));
+}
+
+.history-empty {
+  color: hsl(var(--text-muted));
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Keyboard layout descriptions for Scientific layout helpers */
+.sci-layout-desktop {
+  display: contents;
+}
+
+.sci-layout-mobile {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .sci-layout-desktop {
+    display: none;
+  }
+  .sci-layout-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .sci-layout-mobile button {
+    flex: 1 1 calc(25% - 8px);
+    font-size: 0.9rem;
+    padding: 12px 0;
+  }
+}

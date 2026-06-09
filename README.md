@@ -1,101 +1,106 @@
+# 🧮 NeoCalc - Premium Glassmorphism React Calculator
 
-# 🧮 React Calculator App
+Welcome to **NeoCalc**! This project is a fully-featured, gorgeous, modern scientific calculator built with **React 19** and compiled via **Vite**. It features a stunning, state-of-the-art **Glassmorphism & Neon HSL UI** with ambient background glows, micro-animations, and responsive layouts.
 
-Welcome to the **React Calculator App**! This project is a fully functional calculator built with **React** and styled using **Bootstrap 5**. It includes both basic arithmetic operations and advanced features to make it a practical and modern calculator.
-
----
-
-## 📂 Repository
-**GitHub User**: [achrafthedev](https://github.com/achrafthedev)  
-**Repository Name**: [react-calculator-app](https://github.com/achrafthedev/react-calculator-app)
+It is fully containerized with a production-grade multi-stage Docker build and Nginx static server.
 
 ---
 
-## 🚀 Features
-- ✅ **Basic Arithmetic Operations**: Addition, Subtraction, Multiplication, Division
-- 🧪 **Advanced Functions**: Square Root, Exponent, Percentage, Invert Sign
-- 🖥️ **Keyboard Support**: Allows users to type numbers and operators using their keyboard
-- 🎨 **Responsive Design**: Works perfectly on both desktop and mobile devices
-- 🌗 **Dark Mode (Optional)**: Users can switch between light and dark themes
+## 📂 Repository Info
+- **GitHub User**: [achrafthedev](https://github.com/achrafthedev)  
+- **Repository Name**: [neocalc](https://github.com/achrafthedev/neocalc)
 
 ---
 
-## 📋 How to Run the Project
+## ✨ Features
 
-### 1️⃣ Clone the Repository
+- 🌗 **Premium Dark/Light Themes**: Soft theme transitioning with ambient glows using HSL tailored color palettes.
+- 🧪 **Standard & Scientific Modes**: Swappable grid layouts. Scientific mode includes:
+  - Trigonometry: `sin`, `cos`, `tan`
+  - Logarithms: `log` (base 10), `ln` (natural log)
+  - Exponents & Powers: `^`, `x²`, `1/x`
+  - Grouping: Parentheses `( )`
+  - Constants: `π` (Math.PI) and `e` (Math.E)
+- 🔒 **Safe Expression Parser**: Custom parser using the **Shunting-Yard Algorithm** for safe evaluation. Completely eliminates JavaScript `eval()`.
+- ⚡ **Live Preview Display**: Shows calculation results instantly in a soft text preview as you type, with smart automatic bracket closure.
+- ⌨️ **Comprehensive Keyboard Listeners**: Listeners capture key presses globally so you can type calculations naturally (`0-9`, `.`, `+`, `-`, `*`, `/`, `^`, `%`, `(`, `)`, `Enter` / `=`, `Backspace`, `Escape`).
+- 🕰️ **Calculations History Drawer**: A slide-in panel logging past calculations with click-to-load and clipboard copying capability.
+- 🔊 **Web Audio Sound Effects**: A custom synthesiser generates pleasant, snappy digital sound effects on button clicks (can be muted via a header button).
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Run Locally with Node.js
+
+#### Clone the Repository
 ```bash
-git clone https://github.com/achrafthedev/react-calculator-app.git
+git clone https://github.com/achrafthedev/neocalc.git
+cd neocalc
 ```
 
-### 2️⃣ Navigate to the Project Directory
-```bash
-cd react-calculator-app
-```
-
-### 3️⃣ Install Dependencies
+#### Install Dependencies
 ```bash
 npm install
 ```
 
-### 4️⃣ Run the App
+#### Run in Development Mode
 ```bash
-npm start
+npm run dev
+```
+The app will run locally and open at **http://localhost:3000** in your browser.
+
+#### Build for Production
+```bash
+npm run build
+```
+This builds static assets into the `/dist` directory.
+
+---
+
+### 2️⃣ Run with Docker (Recommended)
+
+Make sure you have Docker and Docker Compose installed.
+
+#### Run with Docker Compose
+To build and run the application inside an optimized Nginx container:
+```bash
+docker-compose up --build -d
+```
+The application will instantly compile and be served at **http://localhost:3000**.
+
+#### Stop the Container
+```bash
+docker-compose down
 ```
 
-The app will be available at **http://localhost:3000** in your browser.
+---
+
+## 🛠️ Architecture and Stack
+
+- **React 19** & **Vite**: Modern UI runtime and lightning-fast developer tooling.
+- **Vanilla CSS3**: Tailored HSL color models, custom CSS variables, custom grids, and glassmorphic blurred filters (`backdrop-filter: blur(20px)`). No massive design frameworks needed!
+- **Nginx**: Serves built static files, handles security headers, enables Gzip compression, and optimizes browser caching for production.
+- **Docker**: Simple container orchestration to build and deploy anywhere.
 
 ---
 
-## 🛠️ Technologies Used
-- **React** (JavaScript library for building user interfaces)
-- **Bootstrap 5** (for styling and responsive design)
-- **CSS3** (custom styles for the calculator)
+## ⌨️ Keyboard Shortcut Maps
 
----
-
-## 📂 Project Structure
-```
-react-calculator-app/
-├── public/
-│   └── index.html
-├── src/
-│   ├── App.js
-│   ├── Calculator.js
-│   ├── App.css
-│   └── index.js
-```
-
-- **App.js**: Main app component
-- **Calculator.js**: Calculator component containing the logic and UI
-- **App.css**: Custom styles
-- **index.js**: Entry point for the React app
-
----
-
-## 🎨 UI Enhancements
-- The app uses **Bootstrap 5** for a clean and modern UI.
-- Custom **CSS styles** are applied for additional enhancements.
-- The app is fully **responsive** and works perfectly on all devices.
-
----
-
-## 🎯 How It Works
-1. The calculator accepts user input via buttons or keyboard.
-2. It performs basic arithmetic operations such as addition, subtraction, multiplication, and division.
-3. It also includes advanced functions like square root, exponent, percentage, and invert sign.
-4. Users can clear the entire input (C) or delete the last entry (CE).
-
----
-
-## 🤖 Future Improvements
-- Add a **history feature** to keep track of previous calculations.
-- Implement a **scientific mode** with more advanced functions.
-- Add a **dark mode toggle** to switch between light and dark themes.
-
----
-
-## 🖊️ License
-This project is licensed under the **MIT License**. Feel free to use, modify, and distribute this project as you wish.
+| Keyboard Key | Calculator Button | Action |
+| :--- | :--- | :--- |
+| `0` - `9` | `0` - `9` | Input Numbers |
+| `.` | `.` | Decimal separator |
+| `+` | `+` | Addition |
+| `-` | `-` | Subtraction |
+| `*` | `×` | Multiplication |
+| `/` | `÷` | Division |
+| `%` | `%` | Modulo |
+| `^` | `^` | Exponent power |
+| `(` / `)` | `(` / `)` | Brackets |
+| `Enter` / `=` | `=` | Calculate |
+| `Backspace` | `CE` | Delete last entry |
+| `Escape` | `C` | Clear screen |
 
 ---
 
@@ -104,10 +109,5 @@ Contributions are welcome! Feel free to fork the repository and submit a pull re
 
 ---
 
-## 📧 Contact
-For any inquiries or feedback, please contact me at:
-- **GitHub**: [achrafthedev](https://github.com/achrafthedev)
-
----
-
-### 🌟 **If you like this project, please give it a star on GitHub!** 🌟
+## 🖊️ License
+This project is licensed under the **MIT License**.

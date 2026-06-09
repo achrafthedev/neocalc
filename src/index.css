@@ -1,13 +1,137 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  /* HSL Color Tokens - Dark Mode Default */
+  --bg-primary: 224 25% 6%;
+  --bg-gradient-start: 220 30% 5%;
+  --bg-gradient-end: 260 35% 8%;
+  
+  --glass-bg: 220 20% 10% / 0.45;
+  --glass-border: 220 20% 20% / 0.4;
+  --glass-highlight: 220 20% 30% / 0.15;
+  
+  --text-primary: 210 40% 98%;
+  --text-secondary: 215 20% 65%;
+  --text-muted: 215 15% 45%;
+
+  /* Action HSL Colors */
+  --accent-primary: 263 90% 65%;      /* Electric Violet */
+  --accent-secondary: 190 90% 50%;    /* Neon Cyan */
+  --accent-success: 145 80% 50%;      /* Neon Green */
+  --accent-danger: 350 90% 60%;       /* Neon Pink/Red */
+  --accent-warning: 38 95% 55%;       /* Warm Amber */
+  --accent-gray: 220 15% 20%;         /* Button Gray */
+
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Share Tech Mono', 'Courier New', Courier, monospace;
+  
+  --glow-shadow: 0 0 20px;
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* HSL Color Tokens - Light Mode Overrides */
+[data-theme="light"] {
+  --bg-primary: 220 30% 96%;
+  --bg-gradient-start: 210 40% 98%;
+  --bg-gradient-end: 220 30% 92%;
+  
+  --glass-bg: 0 0% 100% / 0.65;
+  --glass-border: 220 20% 80% / 0.6;
+  --glass-highlight: 220 20% 95% / 0.4;
+  
+  --text-primary: 224 25% 12%;
+  --text-secondary: 220 15% 40%;
+  --text-muted: 220 10% 60%;
+
+  --accent-primary: 263 85% 55%;
+  --accent-secondary: 190 85% 40%;
+  --accent-success: 145 75% 40%;
+  --accent-danger: 350 85% 50%;
+  --accent-warning: 38 90% 45%;
+  --accent-gray: 220 20% 88%;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: hsl(var(--text-primary));
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: radial-gradient(
+    circle at 50% 50%,
+    hsl(var(--bg-gradient-end)),
+    hsl(var(--bg-gradient-start))
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Background Glowing Ambient Orbs */
+body::before,
+body::after {
+  content: '';
+  position: absolute;
+  width: 50vw;
+  height: 50vw;
+  max-width: 600px;
+  max-height: 600px;
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(150px);
+  opacity: 0.15;
+  pointer-events: none;
+  transition: var(--transition-smooth);
+}
+
+body::before {
+  background: hsl(var(--accent-primary));
+  top: 10%;
+  left: 10%;
+}
+
+body::after {
+  background: hsl(var(--accent-secondary));
+  bottom: 10%;
+  right: 10%;
+}
+
+[data-theme="light"]::before,
+[data-theme="light"]::after {
+  opacity: 0.08;
+  filter: blur(180px);
+}
+
+/* App Centering and Layout */
+.App {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--text-muted) / 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--accent-primary) / 0.6);
 }
