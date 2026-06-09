@@ -334,14 +334,15 @@ const NeoCalc = () => {
   const keys = isScientific ? scientificKeys : standardKeys;
 
   return (
-    <div className={`calculator-container ${isScientific ? 'scientific' : ''}`}>
-      {/* Header section with toggle buttons */}
-      <div className="calc-header">
+    <div className="neocalc-wrapper">
+
+      {/* ── Branded header bar – sits ABOVE the glass card ── */}
+      <div className="neocalc-brand">
         <h1 className="calc-title" id="main-title">
-          <span>🧮</span> NeoCalc
+          <span className="calc-logo-emoji">🧮</span>
+          <span className="calc-logo-text">NeoCalc</span>
         </h1>
         <div className="calc-controls">
-          {/* Scientific Mode Toggle */}
           <button
             className={`icon-btn ${isScientific ? 'active' : ''}`}
             onClick={() => setIsScientific(!isScientific)}
@@ -351,7 +352,6 @@ const NeoCalc = () => {
             {isScientific ? 'Std' : 'Sci'}
           </button>
 
-          {/* Audio Sound FX Toggle */}
           <button
             className={`icon-btn ${soundEnabled ? 'active' : ''}`}
             onClick={() => setSoundEnabled(!soundEnabled)}
@@ -369,7 +369,6 @@ const NeoCalc = () => {
             )}
           </button>
 
-          {/* Theme Switcher */}
           <button
             className="icon-btn"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -378,7 +377,7 @@ const NeoCalc = () => {
           >
             {theme === 'dark' ? (
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0Zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13Zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5ZM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5ZM13.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0Zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0Zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707ZM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708Z"/>
+                <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0Zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13Zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5ZM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5Zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0Zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0Zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707ZM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708Z"/>
               </svg>
             ) : (
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -387,7 +386,6 @@ const NeoCalc = () => {
             )}
           </button>
 
-          {/* Calculations History Toggle */}
           <button
             className={`icon-btn ${isHistoryOpen ? 'active' : ''}`}
             onClick={() => setIsHistoryOpen(true)}
@@ -401,109 +399,95 @@ const NeoCalc = () => {
         </div>
       </div>
 
-      {/* Screen Display */}
-      <div className="calc-screen">
-        <div className="screen-expression" ref={screenExprRef}>
-          {input || '0'}
-        </div>
-        <div className={`screen-result ${result ? '' : 'final'}`}>
-          {result ? `= ${result}` : ''}
-        </div>
-      </div>
+      {/* ── Glass calculator card: screen + buttons only ── */}
+      <div className={`calculator-container ${isScientific ? 'scientific' : ''}`}>
 
-      {/* Mobile Scientific Helper Panel (displayed only on mobile/narrow layouts) */}
-      {isScientific && (
-        <div className="sci-layout-mobile">
-          {['sin', 'cos', 'tan', 'log', 'ln', 'sqrt', 'π', 'e', '(', ')', '^', 'abs'].map((key) => (
-            <button
-              key={key}
-              className="calc-key scientific-key"
-              onClick={() => handleKeyClick(key)}
-            >
-              {key}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Keyboard Grid */}
-      <div className="calc-grid">
-        {keys.map((key, index) => {
-          const style = key.gridSpan ? { gridColumn: `span ${key.gridSpan}` } : {};
-          return (
-            <button
-              key={`${key.value}-${index}`}
-              className={`calc-key ${key.type}`}
-              style={style}
-              onClick={() => handleKeyClick(key.value)}
-            >
-              {key.type === 'backspace' ? (
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M5.83 5.146a.5.5 0 0 0 0 .708L7.975 8l-2.147 2.146a.5.5 0 0 0 .707.708l2.147-2.147 2.146 2.147a.5.5 0 0 0 .707-.708L9.39 8l2.146-2.146a.5.5 0 0 0-.707-.708L8.683 7.293 6.536 5.146a.5.5 0 0 0-.707 0z"/>
-                  <path d="M13.683 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1h7.08zm-7.08 1a1 1 0 0 0-.76.35L1 8l4.844 5.65a1 1 0 0 0 .759.35h7.08a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-7.08z"/>
-                </svg>
-              ) : (
-                key.value
-              )}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* History Drawer */}
-      <div className={`history-drawer ${isHistoryOpen ? 'open' : ''}`}>
-        <div className="history-header">
-          <h3>History</h3>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            {history.length > 0 && (
-              <button
-                className="icon-btn"
-                onClick={clearHistory}
-                title="Clear History"
-                style={{ border: 'none', background: 'transparent' }}
-              >
-                <svg width="15" height="15" fill="hsl(var(--accent-danger))" viewBox="0 0 16 16">
-                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                </svg>
-              </button>
-            )}
-            <button
-              className="icon-btn"
-              onClick={() => setIsHistoryOpen(false)}
-              title="Close Panel"
-              style={{ border: 'none', background: 'transparent' }}
-            >
-              <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
-                <path fillRule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            </button>
+        {/* Screen Display */}
+        <div className="calc-screen">
+          <div className="screen-expression" ref={screenExprRef}>
+            {input || '0'}
+          </div>
+          <div className={`screen-result ${result ? '' : 'final'}`}>
+            {result ? `= ${result}` : ''}
           </div>
         </div>
-        <div className="history-list">
-          {history.length === 0 ? (
-            <div className="history-empty">No calculations yet</div>
-          ) : (
-            history.map((item, index) => (
-              <div 
-                key={item.id} 
-                className="history-item"
-                onClick={() => loadHistoryItem(item)}
-                title="Click to load back to screen"
+
+        {/* Mobile Scientific Helper Panel */}
+        {isScientific && (
+          <div className="sci-layout-mobile">
+            {['sin', 'cos', 'tan', 'log', 'ln', 'sqrt', 'π', 'e', '(', ')', '^', 'abs'].map((key) => (
+              <button
+                key={key}
+                className="calc-key scientific-key"
+                onClick={() => handleKeyClick(key)}
               >
-                <div className="history-expr">{item.expression}</div>
-                <div className="history-res-row" onClick={(e) => e.stopPropagation()}>
-                  <button
-                    className="history-copy-btn"
-                    onClick={() => copyToClipboard(item.result, index)}
-                  >
-                    {copiedIndex === index ? 'Copied ✓' : 'Copy'}
-                  </button>
-                  <div className="history-res">= {item.result}</div>
+                {key}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Keyboard Grid */}
+        <div className="calc-grid">
+          {keys.map((key, index) => {
+            const style = key.gridSpan ? { gridColumn: `span ${key.gridSpan}` } : {};
+            return (
+              <button
+                key={`${key.value}-${index}`}
+                className={`calc-key ${key.type}`}
+                style={style}
+                onClick={() => handleKeyClick(key.value)}
+              >
+                {key.type === 'backspace' ? (
+                  <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.83 5.146a.5.5 0 0 0 0 .708L7.975 8l-2.147 2.146a.5.5 0 0 0 .707.708l2.147-2.147 2.146 2.147a.5.5 0 0 0 .707-.708L9.39 8l2.146-2.146a.5.5 0 0 0-.707-.708L8.683 7.293 6.536 5.146a.5.5 0 0 0-.707 0z"/>
+                    <path d="M13.683 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1h7.08zm-7.08 1a1 1 0 0 0-.76.35L1 8l4.844 5.65a1 1 0 0 0 .759.35h7.08a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-7.08z"/>
+                  </svg>
+                ) : (
+                  key.value
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* History Drawer */}
+        <div className={`history-drawer ${isHistoryOpen ? 'open' : ''}`}>
+          <div className="history-header">
+            <h3>History</h3>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              {history.length > 0 && (
+                <button className="icon-btn" onClick={clearHistory} title="Clear History" style={{ border: 'none', background: 'transparent' }}>
+                  <svg width="15" height="15" fill="hsl(var(--accent-danger))" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                  </svg>
+                </button>
+              )}
+              <button className="icon-btn" onClick={() => setIsHistoryOpen(false)} title="Close Panel" style={{ border: 'none', background: 'transparent' }}>
+                <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+                  <path fillRule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div className="history-list">
+            {history.length === 0 ? (
+              <div className="history-empty">No calculations yet</div>
+            ) : (
+              history.map((item, index) => (
+                <div key={item.id} className="history-item" onClick={() => loadHistoryItem(item)} title="Click to load back to screen">
+                  <div className="history-expr">{item.expression}</div>
+                  <div className="history-res-row" onClick={(e) => e.stopPropagation()}>
+                    <button className="history-copy-btn" onClick={() => copyToClipboard(item.result, index)}>
+                      {copiedIndex === index ? 'Copied ✓' : 'Copy'}
+                    </button>
+                    <div className="history-res">= {item.result}</div>
+                  </div>
                 </div>
-              </div>
-            ))
-          )}
+              ))
+            )}
+          </div>
         </div>
       </div>
     </div>
