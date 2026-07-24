@@ -7,7 +7,8 @@ It is fully containerized with a production-grade multi-stage Docker build and N
 ---
 
 ## 📂 Repository Info
-- **GitHub User**: [achrafthedev](https://github.com/achrafthedev)  
+
+- **GitHub User**: [achrafthedev](https://github.com/achrafthedev)
 - **Repository Name**: [neocalc](https://github.com/achrafthedev/neocalc)
 
 ---
@@ -34,26 +35,32 @@ It is fully containerized with a production-grade multi-stage Docker build and N
 ### 1️⃣ Run Locally with Node.js
 
 #### Clone the Repository
+
 ```bash
 git clone https://github.com/achrafthedev/neocalc.git
 cd neocalc
 ```
 
 #### Install Dependencies
+
 ```bash
 npm install
 ```
 
 #### Run in Development Mode
+
 ```bash
 npm run dev
 ```
+
 The app will run locally and open at **http://localhost:3000** in your browser.
 
 #### Build for Production
+
 ```bash
 npm run build
 ```
+
 This builds static assets into the `/dist` directory.
 
 ---
@@ -63,13 +70,17 @@ This builds static assets into the `/dist` directory.
 Make sure you have Docker and Docker Compose installed.
 
 #### Run with Docker Compose
+
 To build and run the application inside an optimized Nginx container:
+
 ```bash
 docker-compose up --build -d
 ```
+
 The application will instantly compile and be served at **http://localhost:3000**.
 
 #### Stop the Container
+
 ```bash
 docker-compose down
 ```
@@ -87,27 +98,29 @@ docker-compose down
 
 ## ⌨️ Keyboard Shortcut Maps
 
-| Keyboard Key | Calculator Button | Action |
-| :--- | :--- | :--- |
-| `0` - `9` | `0` - `9` | Input Numbers |
-| `.` | `.` | Decimal separator |
-| `+` | `+` | Addition |
-| `-` | `-` | Subtraction |
-| `*` | `×` | Multiplication |
-| `/` | `÷` | Division |
-| `%` | `%` | Modulo |
-| `^` | `^` | Exponent power |
-| `(` / `)` | `(` / `)` | Brackets |
-| `Enter` / `=` | `=` | Calculate |
-| `Backspace` | `CE` | Delete last entry |
-| `Escape` | `C` | Clear screen |
+| Keyboard Key  | Calculator Button | Action            |
+| :------------ | :---------------- | :---------------- |
+| `0` - `9`     | `0` - `9`         | Input Numbers     |
+| `.`           | `.`               | Decimal separator |
+| `+`           | `+`               | Addition          |
+| `-`           | `-`               | Subtraction       |
+| `*`           | `×`               | Multiplication    |
+| `/`           | `÷`               | Division          |
+| `%`           | `%`               | Modulo            |
+| `^`           | `^`               | Exponent power    |
+| `(` / `)`     | `(` / `)`         | Brackets          |
+| `Enter` / `=` | `=`               | Calculate         |
+| `Backspace`   | `CE`              | Delete last entry |
+| `Escape`      | `C`               | Clear screen      |
 
 ---
 
 ## 🤝 Contributing
+
 Contributions are welcome! Feel free to fork the repository and submit a pull request.
 
 ---
 
 ## 🖊️ License
+
 This project is licensed under the **MIT License**.

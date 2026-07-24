@@ -1,5 +1,5 @@
-import React from 'react';
-import NeoCalc from './NeoCalc';
+import React from "react";
+import NeoCalc from "./NeoCalc";
 
 function App() {
   return (

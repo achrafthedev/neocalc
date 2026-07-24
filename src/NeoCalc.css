@@ -485,11 +485,17 @@
 /* ═══════════════════════════════════════
    SCIENTIFIC MOBILE HELPER
 ═══════════════════════════════════════ */
-.sci-layout-desktop { display: contents; }
-.sci-layout-mobile  { display: none; }
+.sci-layout-desktop {
+  display: contents;
+}
+.sci-layout-mobile {
+  display: none;
+}
 
 @media (max-width: 600px) {
-  .sci-layout-desktop { display: none; }
+  .sci-layout-desktop {
+    display: none;
+  }
   .sci-layout-mobile {
     display: flex;
     flex-wrap: wrap;

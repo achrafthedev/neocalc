@@ -4,25 +4,25 @@
  */
 
 const precedence = {
-  '+': 1,
-  '-': 1,
-  '*': 2,
-  '/': 2,
-  '%': 2,
-  '^': 3,
-  'u-': 4, // Unary minus
-  'u+': 4  // Unary plus
+  "+": 1,
+  "-": 1,
+  "*": 2,
+  "/": 2,
+  "%": 2,
+  "^": 3,
+  "u-": 4, // Unary minus
+  "u+": 4, // Unary plus
 };
 
 const associativity = {
-  '+': 'LEFT',
-  '-': 'LEFT',
-  '*': 'LEFT',
-  '/': 'LEFT',
-  '%': 'LEFT',
-  '^': 'RIGHT',
-  'u-': 'RIGHT',
-  'u+': 'RIGHT'
+  "+": "LEFT",
+  "-": "LEFT",
+  "*": "LEFT",
+  "/": "LEFT",
+  "%": "LEFT",
+  "^": "RIGHT",
+  "u-": "RIGHT",
+  "u+": "RIGHT",
 };
 
 const tokenize = (str) => {
@@ -39,34 +39,38 @@ const tokenize = (str) => {
 
     // Numbers (including integers and floating points)
     if (/[0-9.]/.test(char)) {
-      let numStr = '';
+      let numStr = "";
       let hasDot = false;
       while (i < str.length && /[0-9.]/.test(str[i])) {
-        if (str[i] === '.') {
+        if (str[i] === ".") {
           if (hasDot) break; // Double decimal points invalid
           hasDot = true;
         }
         numStr += str[i];
         i++;
       }
-      tokens.push({ type: 'NUMBER', value: parseFloat(numStr) });
+      tokens.push({ type: "NUMBER", value: parseFloat(numStr) });
       continue;
     }
 
     // Constants (π, e) and trigonometric/math functions
     if (/[a-zA-Zπ]/.test(char)) {
-      let word = '';
+      let word = "";
       while (i < str.length && /[a-zA-Zπ]/.test(str[i])) {
         word += str[i];
         i++;
       }
 
-      if (word === 'π' || word === 'pi' || word === 'PI') {
-        tokens.push({ type: 'NUMBER', value: Math.PI });
-      } else if (word === 'e') {
-        tokens.push({ type: 'NUMBER', value: Math.E });
-      } else if (['sin', 'cos', 'tan', 'log', 'ln', 'sqrt', 'abs'].includes(word.toLowerCase())) {
-        tokens.push({ type: 'FUNCTION', value: word.toLowerCase() });
+      if (word === "π" || word === "pi" || word === "PI") {
+        tokens.push({ type: "NUMBER", value: Math.PI });
+      } else if (word === "e") {
+        tokens.push({ type: "NUMBER", value: Math.E });
+      } else if (
+        ["sin", "cos", "tan", "log", "ln", "sqrt", "abs"].includes(
+          word.toLowerCase(),
+        )
+      ) {
+        tokens.push({ type: "FUNCTION", value: word.toLowerCase() });
       } else {
         throw new Error(`Unknown identifier: ${word}`);
       }
@@ -74,8 +78,8 @@ const tokenize = (str) => {
     }
 
     // Operators and Parentheses
-    if (['+', '-', '*', '/', '^', '%', '(', ')'].includes(char)) {
-      tokens.push({ type: 'OPERATOR', value: char });
+    if (["+", "-", "*", "/", "^", "%", "(", ")"].includes(char)) {
+      tokens.push({ type: "OPERATOR", value: char });
       i++;
       continue;
     }
@@ -97,20 +101,20 @@ const insertImplicitMultiplication = (tokens) => {
       const next = tokens[i + 1];
 
       const isCurrentOperandLike =
-        current.type === 'NUMBER' ||
-        current.value === ')';
+        current.type === "NUMBER" || current.value === ")";
 
       const isNextOperandLike =
-        (next.type === 'NUMBER' && (next.value === Math.PI || next.value === Math.E)) ||
-        next.type === 'FUNCTION' ||
-        next.value === '(';
+        (next.type === "NUMBER" &&
+          (next.value === Math.PI || next.value === Math.E)) ||
+        next.type === "FUNCTION" ||
+        next.value === "(";
 
       if (isCurrentOperandLike && isNextOperandLike) {
-        result.push({ type: 'OPERATOR', value: '*' });
+        result.push({ type: "OPERATOR", value: "*" });
       }
 
-      if (current.value === ')' && next.type === 'NUMBER') {
-        result.push({ type: 'OPERATOR', value: '*' });
+      if (current.value === ")" && next.type === "NUMBER") {
+        result.push({ type: "OPERATOR", value: "*" });
       }
     }
   }
@@ -122,11 +126,21 @@ const processTokens = (rawTokens) => {
   const tokens = [];
   for (let i = 0; i < rawTokens.length; i++) {
     const token = rawTokens[i];
-    if (token.type === 'OPERATOR' && (token.value === '-' || token.value === '+')) {
+    if (
+      token.type === "OPERATOR" &&
+      (token.value === "-" || token.value === "+")
+    ) {
       const prev = tokens[tokens.length - 1];
-      const isUnary = !prev || (prev.type === 'OPERATOR' && prev.value !== ')') || prev.value === '(' || prev.type === 'FUNCTION';
+      const isUnary =
+        !prev ||
+        (prev.type === "OPERATOR" && prev.value !== ")") ||
+        prev.value === "(" ||
+        prev.type === "FUNCTION";
       if (isUnary) {
-        tokens.push({ type: 'UNARY_OPERATOR', value: token.value === '-' ? 'u-' : 'u+' });
+        tokens.push({
+          type: "UNARY_OPERATOR",
+          value: token.value === "-" ? "u-" : "u+",
+        });
         continue;
       }
     }
@@ -141,37 +155,43 @@ const shuntingYard = (tokens) => {
   const operatorStack = [];
 
   for (const token of tokens) {
-    if (token.type === 'NUMBER') {
+    if (token.type === "NUMBER") {
       outputQueue.push(token);
-    } else if (token.type === 'FUNCTION') {
+    } else if (token.type === "FUNCTION") {
       operatorStack.push(token);
-    } else if (token.type === 'OPERATOR' || token.type === 'UNARY_OPERATOR') {
+    } else if (token.type === "OPERATOR" || token.type === "UNARY_OPERATOR") {
       let top = operatorStack[operatorStack.length - 1];
       while (
         top &&
-        (top.type === 'OPERATOR' || top.type === 'UNARY_OPERATOR' || top.type === 'FUNCTION') &&
-        (top.type === 'FUNCTION' ||
+        (top.type === "OPERATOR" ||
+          top.type === "UNARY_OPERATOR" ||
+          top.type === "FUNCTION") &&
+        (top.type === "FUNCTION" ||
           precedence[top.value] > precedence[token.value] ||
-          (precedence[top.value] === precedence[token.value] && associativity[token.value] === 'LEFT'))
+          (precedence[top.value] === precedence[token.value] &&
+            associativity[token.value] === "LEFT"))
       ) {
         outputQueue.push(operatorStack.pop());
         top = operatorStack[operatorStack.length - 1];
       }
       operatorStack.push(token);
-    } else if (token.value === '(') {
+    } else if (token.value === "(") {
       operatorStack.push(token);
-    } else if (token.value === ')') {
+    } else if (token.value === ")") {
       let top = operatorStack[operatorStack.length - 1];
-      while (top && top.value !== '(') {
+      while (top && top.value !== "(") {
         outputQueue.push(operatorStack.pop());
         top = operatorStack[operatorStack.length - 1];
       }
       if (!top) {
-        throw new Error('Mismatched parentheses');
+        throw new Error("Mismatched parentheses");
       }
       operatorStack.pop(); // Pop '('
 
-      if (operatorStack.length > 0 && operatorStack[operatorStack.length - 1].type === 'FUNCTION') {
+      if (
+        operatorStack.length > 0 &&
+        operatorStack[operatorStack.length - 1].type === "FUNCTION"
+      ) {
         outputQueue.push(operatorStack.pop());
       }
     }
@@ -179,8 +199,8 @@ const shuntingYard = (tokens) => {
 
   while (operatorStack.length > 0) {
     const op = operatorStack.pop();
-    if (op.value === '(' || op.value === ')') {
-      throw new Error('Mismatched parentheses');
+    if (op.value === "(" || op.value === ")") {
+      throw new Error("Mismatched parentheses");
     }
     outputQueue.push(op);
   }
@@ -193,63 +213,88 @@ const evaluatePostfix = (postfix) => {
   const stack = [];
 
   for (const token of postfix) {
-    if (token.type === 'NUMBER') {
+    if (token.type === "NUMBER") {
       stack.push(token.value);
-    } else if (token.type === 'UNARY_OPERATOR') {
-      if (stack.length < 1) throw new Error('Invalid expression structure');
+    } else if (token.type === "UNARY_OPERATOR") {
+      if (stack.length < 1) throw new Error("Invalid expression structure");
       const val = stack.pop();
-      if (token.value === 'u-' && typeof val === 'number') {
+      if (token.value === "u-" && typeof val === "number") {
         stack.push(-val);
       } else {
         stack.push(val);
       }
-    } else if (token.type === 'OPERATOR') {
-      if (stack.length < 2) throw new Error('Binary operation missing arguments');
+    } else if (token.type === "OPERATOR") {
+      if (stack.length < 2)
+        throw new Error("Binary operation missing arguments");
       const b = stack.pop();
       const a = stack.pop();
       switch (token.value) {
-        case '+': stack.push(a + b); break;
-        case '-': stack.push(a - b); break;
-        case '*': stack.push(a * b); break;
-        case '/':
-          if (b === 0) throw new Error('Division by zero');
+        case "+":
+          stack.push(a + b);
+          break;
+        case "-":
+          stack.push(a - b);
+          break;
+        case "*":
+          stack.push(a * b);
+          break;
+        case "/":
+          if (b === 0) throw new Error("Division by zero");
           stack.push(a / b);
           break;
-        case '%': stack.push(a % b); break;
-        case '^': stack.push(Math.pow(a, b)); break;
-        default: throw new Error(`Invalid operator: ${token.value}`);
+        case "%":
+          stack.push(a % b);
+          break;
+        case "^":
+          stack.push(Math.pow(a, b));
+          break;
+        default:
+          throw new Error(`Invalid operator: ${token.value}`);
       }
-    } else if (token.type === 'FUNCTION') {
-      if (stack.length < 1) throw new Error('Function missing arguments');
+    } else if (token.type === "FUNCTION") {
+      if (stack.length < 1) throw new Error("Function missing arguments");
       const val = stack.pop();
       switch (token.value) {
-        case 'sin': stack.push(Math.sin(val)); break;
-        case 'cos': stack.push(Math.cos(val)); break;
-        case 'tan': stack.push(Math.tan(val)); break;
-        case 'log':
-          if (val <= 0) throw new Error('Logarithm domain error');
+        case "sin":
+          stack.push(Math.sin(val));
+          break;
+        case "cos":
+          stack.push(Math.cos(val));
+          break;
+        case "tan":
+          stack.push(Math.tan(val));
+          break;
+        case "log":
+          if (val <= 0) throw new Error("Logarithm domain error");
           stack.push(Math.log10(val));
           break;
-        case 'ln':
-          if (val <= 0) throw new Error('Natural log domain error');
+        case "ln":
+          if (val <= 0) throw new Error("Natural log domain error");
           stack.push(Math.log(val));
           break;
-        case 'sqrt':
-          if (val < 0) throw new Error('Square root domain error');
+        case "sqrt":
+          if (val < 0) throw new Error("Square root domain error");
           stack.push(Math.sqrt(val));
           break;
-        case 'abs': stack.push(Math.abs(val)); break;
-        default: throw new Error(`Invalid function: ${token.value}`);
+        case "abs":
+          stack.push(Math.abs(val));
+          break;
+        default:
+          throw new Error(`Invalid function: ${token.value}`);
       }
     }
   }
 
   if (stack.length !== 1) {
-    throw new Error('Malformed evaluation stack');
+    throw new Error("Malformed evaluation stack");
   }
 
   const finalResult = stack[0];
-  if (typeof finalResult === 'number' && !isNaN(finalResult) && isFinite(finalResult)) {
+  if (
+    typeof finalResult === "number" &&
+    !isNaN(finalResult) &&
+    isFinite(finalResult)
+  ) {
     // Avoid IEEE 754 precision issues (e.g. 0.1 + 0.2 = 0.30000000000000004)
     // Round to 12 decimal places
     const rounded = Math.round(finalResult * 1e12) / 1e12;
@@ -266,14 +311,14 @@ const evaluatePostfix = (postfix) => {
  * @returns {string} The evaluation result or "Error".
  */
 export const evaluateExpression = (expression) => {
-  if (!expression || expression.trim() === '') return '';
+  if (!expression || expression.trim() === "") return "";
   try {
     // Normalize string representation
     let cleaned = expression
-      .replace(/×/g, '*')
-      .replace(/÷/g, '/')
-      .replace(/mod/g, '%')
-      .replace(/π/g, 'π');
+      .replace(/×/g, "*")
+      .replace(/÷/g, "/")
+      .replace(/mod/g, "%")
+      .replace(/π/g, "π");
 
     const raw = tokenize(cleaned);
     const withImplicit = insertImplicitMultiplication(raw);
@@ -282,11 +327,11 @@ export const evaluateExpression = (expression) => {
     const result = evaluatePostfix(postfix);
 
     if (isNaN(result) || !isFinite(result)) {
-      return 'Error';
+      return "Error";
     }
     return result.toString();
   } catch (error) {
-    console.error('Parser error:', error);
-    return 'Error';
+    console.error("Parser error:", error);
+    return "Error";
   }
 };
